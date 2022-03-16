@@ -11,13 +11,15 @@ const {
   createUser,
   removeUser,
   updateUser,
-  addNewRoom,
+  addNewRoomToUser,
   usersInRoom,
+  getOneUser,
 } = require("./utils/manageUsers");
 const { filterArrRemId } = require("./utils/helpers");
 const {
   createNewInvitation,
   invitationExist,
+  removeInvitation,
 } = require("./utils/manageInvitations");
 
 const io = require("socket.io")(http, {
@@ -61,10 +63,11 @@ io.on("connection", (socket) => {
     const combinedRoom = [otherRoom, myRoom].sort().join("");
     if (!invitationExist(combinedRoom)) {
       socket.join(combinedRoom);
-      const user = addNewRoom(id, combinedRoom);
+      const user = addNewRoomToUser(id, combinedRoom);
       socket.emit("update_user", user);
       const roomUsers = usersInRoom(combinedRoom);
       const otherUser = roomUsers.filter((u) => u.id === id);
+
       createNewInvitation(combinedRoom);
       socket.emit("invitation_created");
       socket.broadcast.emit("new_invitation", {
@@ -72,6 +75,16 @@ io.on("connection", (socket) => {
         otherUser: otherUser[0],
       });
     } else socket.emit("invitation_exists");
+  });
+
+  socket.on("invitation_rejected", (combinedRoom, myId, otherUserRoom) => {
+    const rejectingUser = getOneUser(myId);
+    removeInvitation(combinedRoom);
+    socket.emit("invitation_removed", combinedRoom);
+    console.log(rejectingUser, otherUserRoom);
+    socket.broadcast
+      .to(otherUserRoom)
+      .emit("invitation_rejected", rejectingUser);
   });
 
   socket.on("public_key", (otherPublicKey) => {

@@ -14,7 +14,7 @@ module.exports = {
     };
     return users[idx];
   },
-  addNewRoom: (id, room) => {
+  addNewRoomToUser: (id, room) => {
     const user = users.find((usr) => usr.id === id);
     user.rooms.push(room);
     return user;
