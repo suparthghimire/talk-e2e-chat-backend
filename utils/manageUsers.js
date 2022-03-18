@@ -19,6 +19,12 @@ module.exports = {
     user.rooms.push(room);
     return user;
   },
+  removeRoomFromUser: (id, room) => {
+    // const user = users.find((usr) => usr.id === id);
+    // const roomIdx = users.rooms.findIndex((r) => r === roomId);
+    // user.rooms.splice(roomIdx, 1);
+    return user;
+  },
   removeUser: (id) => {
     const idx = users.findIndex((user) => user.id == id);
     users.splice(idx, 1);
