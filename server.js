@@ -80,7 +80,6 @@ io.on("connection", (socket) => {
   socket.on("other_user_in_room", ({ combinedRoomId, myId }) => {
     const allUsersInRoom = usersInRoom(combinedRoomId);
     const otherUser = allUsersInRoom.filter((users) => users.id !== myId);
-    console.log(otherUser);
     socket.emit("other_user_in_room", otherUser[0]);
   });
   socket.on("invitation_accepted", (combinedRoom) => {
@@ -96,7 +95,6 @@ io.on("connection", (socket) => {
     socket.emit("invitation_removed", combinedRoom);
     socket.emit("update_user", user);
 
-    console.log(rejectingUser, otherUserRoom);
     socket.broadcast
       .to(otherUserRoom)
       .emit("invitation_rejected", rejectingUser);
