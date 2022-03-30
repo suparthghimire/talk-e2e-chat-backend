@@ -4,7 +4,6 @@ const express = require("express");
 const app = express();
 
 const http = require("http").Server(app);
-const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const {
   getAllUsers,
@@ -137,11 +136,16 @@ io.on("connection", (socket) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
-app.use(cookieParser());
 
 app.get("/", (req, res) => {
   return res.json({ data: "123" });
 });
+
+if (process.env.NODE_ENV === "production") {
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+  });
+}
 
 const PORT = process.env.port || 3000;
 http.listen(PORT, () => console.log(`Server Started at ${PORT}`));
