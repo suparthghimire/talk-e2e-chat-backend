@@ -141,11 +141,5 @@ app.get("/", (req, res) => {
   return res.json({ data: "123" });
 });
 
-if (process.env.NODE_ENV === "production") {
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-  });
-}
-
 const PORT = process.env.port || 3000;
 http.listen(PORT, () => console.log(`Server Started at ${PORT}`));
