@@ -141,5 +141,5 @@ app.get("/", (req, res) => {
   return res.json({ data: "123" });
 });
 
-const PORT = process.env.port || 3000;
+const PORT = process.env.PORT || 3000;
 http.listen(PORT, () => console.log(`Server Started at ${PORT}`));
