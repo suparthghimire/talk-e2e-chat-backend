@@ -1,5 +1,7 @@
 # Talk - E2EE Chat Application Backend
 
+[Demo](https://talk-e2e-chat-frontend.vercel.app/)
+
 ### End to End Encrypted Chat Application
 
 This application isn't meant to be a production grade chat application that would use E2EE system, but is a way to see how would you implement it in MENN stack.
