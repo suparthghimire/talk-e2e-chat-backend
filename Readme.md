@@ -1,6 +1,6 @@
 # Talk - E2EE Chat Application Backend
 
-[Demo](https://talk-e2e-chat-frontend.vercel.app/)
+[Demo](https://talk.suparthnarayanghimire.com.np/)
 
 ### End to End Encrypted Chat Application
 
